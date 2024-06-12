@@ -1,0 +1,35 @@
+@Behaviour<umat> './src/libUmatBehaviour.dll' 'umatekmc';
+
+@AccelerationAlgorithm 'Cast3M';
+
+@MaterialProperty<constant> 'YoungModulus' 209.e9;
+@MaterialProperty<constant> 'PoissonRatio' 0.3;
+@MaterialProperty<constant> 'MassDensity' 0.0 ;
+@MaterialProperty<constant> 'ThermalExpansion' 0.0 ;
+@MaterialProperty<constant> 'ReferenceTemperatureForThermalExpansionCoefficient' 0.0 ;
+@MaterialProperty<constant> 'ReferenceTemperatureForThermalExpansion' 0.0 ;
+
+@MaterialProperty<constant> 'R0' 260e6;
+@MaterialProperty<constant> 'Q' 222.3e6;
+@MaterialProperty<constant> 'b' 20.;
+@MaterialProperty<constant> 'H' 0.;
+@MaterialProperty<constant> 'de0' 1.e-7;
+@MaterialProperty<constant> 'Ea' 3.52e-22;
+@MaterialProperty<constant> 'Va' 1527e-30;
+@MaterialProperty<constant> 'nta' 0.66;
+@MaterialProperty<constant> 'P1' 100.e6;
+@MaterialProperty<constant> 'omega' 0.001;
+@MaterialProperty<constant> 'P2' 0.001;
+@MaterialProperty<constant> 'palpha' 0.;
+
+@InternalStateVariable 'StrainAgingTime' 10000.;
+
+@ExternalStateVariable 'Temperature' 293.15 ;
+
+
+@Real 'edot' 1.;
+@Real 'EXXmax' 0.08;
+@Real 'tmax' 'EXXmax/edot';																							
+
+@ImposedStrain 'EXX' { 0. :  0., 'tmax' : 'EXXmax'};
+@Times {0., 'tmax' in 200};

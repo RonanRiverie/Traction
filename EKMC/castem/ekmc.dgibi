@@ -1,0 +1,131 @@
+*
+* \file   ekmc.mfront
+* \brief  example of how to use the ekmc behaviour law
+* in the Cast3M finite element solver
+* \author 
+* \date   
+*
+
+** AxisymmetricalGeneralisedPlaneStrain example
+** 'OPTION' 'DIMENSION' 1 'MODELISER' 'UNID' 'AXIS' 'AXGZ' ;
+
+ coel = 'MOTS' 'YOUN' 'NU' 'RHO' 'ALPH' 'TALP' 'TREF' 'DE0' 'EA' 'VA'
+'P1' 'P2' 'OMEG' 'R0' 'Q' 'B' 'H' 'NTA' 'PALP';
+
+ statev = 'MOTS' 'EERR' 'EEZZ' 'EETT' 'P' 'TA';
+
+ params = 'MOTS' 'T' ;
+
+ MO = 'MODELISER' v 'MECANIQUE' 'ELASTIQUE' 'NON_LINEAIRE'
+'UTILISATEUR' 'LIB_LOI' 'libUmatBehaviour.so' 'FCT_LOI' 'umatekmc'
+'C_MATERIAU' coel 'C_VARINTER' statev 'PARA_LOI' params 'CONS' M;
+
+ MA = 'MATERIAU' MO 'YOUN' xyoun 'NU' xnu 'RHO' xrho 'ALPH' xalph
+'TALP' xtalp 'TREF' xtref 'DE0' xde0 'EA' xea 'VA' xva 'P1' xp1 'P2'
+xp2 'OMEG' xomega 'R0' xr0 'Q' xq 'B' xb 'H' xh 'NTA' xnta 'PALP'
+xpalpha;
+
+** Axisymmetrical example
+** 'OPTION' 'DIMENSION' 2 'MODELISER' 'AXIS' ;
+
+ coel = 'MOTS' 'YOUN' 'NU' 'RHO' 'ALPH' 'TALP' 'TREF' 'DE0' 'EA' 'VA'
+'P1' 'P2' 'OMEG' 'R0' 'Q' 'B' 'H' 'NTA' 'PALP';
+
+ statev = 'MOTS' 'EERR' 'EEZZ' 'EETT' 'EERZ' 'P' 'TA';
+
+ params = 'MOTS' 'T' ;
+
+ MO = 'MODELISER' v 'MECANIQUE' 'ELASTIQUE' 'NON_LINEAIRE'
+'UTILISATEUR' 'LIB_LOI' 'libUmatBehaviour.so' 'FCT_LOI' 'umatekmc'
+'C_MATERIAU' coel 'C_VARINTER' statev 'PARA_LOI' params 'CONS' M;
+
+ MA = 'MATERIAU' MO 'YOUN' xyoun 'NU' xnu 'RHO' xrho 'ALPH' xalph
+'TALP' xtalp 'TREF' xtref 'DE0' xde0 'EA' xea 'VA' xva 'P1' xp1 'P2'
+xp2 'OMEG' xomega 'R0' xr0 'Q' xq 'B' xb 'H' xh 'NTA' xnta 'PALP'
+xpalpha;
+
+** PlaneStrain example
+** 'OPTION' 'DIMENSION' 2 'MODELISER' 'PLAN' 'DEFO' ;
+
+ coel = 'MOTS' 'YOUN' 'NU' 'RHO' 'ALPH' 'TALP' 'TREF' 'DE0' 'EA' 'VA'
+'P1' 'P2' 'OMEG' 'R0' 'Q' 'B' 'H' 'NTA' 'PALP';
+
+ statev = 'MOTS' 'EEXX' 'EEYY' 'EEZZ' 'EEXY' 'P' 'TA';
+
+ params = 'MOTS' 'T' ;
+
+ MO = 'MODELISER' v 'MECANIQUE' 'ELASTIQUE' 'NON_LINEAIRE'
+'UTILISATEUR' 'LIB_LOI' 'libUmatBehaviour.so' 'FCT_LOI' 'umatekmc'
+'C_MATERIAU' coel 'C_VARINTER' statev 'PARA_LOI' params 'CONS' M;
+
+ MA = 'MATERIAU' MO 'YOUN' xyoun 'NU' xnu 'RHO' xrho 'ALPH' xalph
+'TALP' xtalp 'TREF' xtref 'DE0' xde0 'EA' xea 'VA' xva 'P1' xp1 'P2'
+xp2 'OMEG' xomega 'R0' xr0 'Q' xq 'B' xb 'H' xh 'NTA' xnta 'PALP'
+xpalpha;
+
+** GeneralisedPlaneStrain example
+** 'OPTION' 'DIMENSION' 2 'MODELISER' 'PLAN' 'GENE' ;
+
+ coel = 'MOTS' 'YOUN' 'NU' 'RHO' 'ALPH' 'TALP' 'TREF' 'DE0' 'EA' 'VA'
+'P1' 'P2' 'OMEG' 'R0' 'Q' 'B' 'H' 'NTA' 'PALP';
+
+ statev = 'MOTS' 'EEXX' 'EEYY' 'EEZZ' 'EEXY' 'P' 'TA';
+
+ params = 'MOTS' 'T' ;
+
+ MO = 'MODELISER' v 'MECANIQUE' 'ELASTIQUE' 'NON_LINEAIRE'
+'UTILISATEUR' 'LIB_LOI' 'libUmatBehaviour.so' 'FCT_LOI' 'umatekmc'
+'C_MATERIAU' coel 'C_VARINTER' statev 'PARA_LOI' params 'CONS' M;
+
+ MA = 'MATERIAU' MO 'YOUN' xyoun 'NU' xnu 'RHO' xrho 'ALPH' xalph
+'TALP' xtalp 'TREF' xtref 'DE0' xde0 'EA' xea 'VA' xva 'P1' xp1 'P2'
+xp2 'OMEG' xomega 'R0' xr0 'Q' xq 'B' xb 'H' xh 'NTA' xnta 'PALP'
+xpalpha;
+
+** Tridimensional example
+** 'OPTION' 'DIMENSION' 3 'MODELISER' 'TRID' ;
+
+ coel = 'MOTS' 'YOUN' 'NU' 'RHO' 'ALPH' 'TALP' 'TREF' 'DE0' 'EA' 'VA'
+'P1' 'P2' 'OMEG' 'R0' 'Q' 'B' 'H' 'NTA' 'PALP';
+
+ statev = 'MOTS' 'EEXX' 'EEYY' 'EEZZ' 'EEXY' 'EEXZ' 'EEYZ' 'P' 'TA';
+
+ params = 'MOTS' 'T' ;
+
+ MO = 'MODELISER' v 'MECANIQUE' 'ELASTIQUE' 'NON_LINEAIRE'
+'UTILISATEUR' 'LIB_LOI' 'libUmatBehaviour.so' 'FCT_LOI' 'umatekmc'
+'C_MATERIAU' coel 'C_VARINTER' statev 'PARA_LOI' params 'CONS' M;
+
+ MA = 'MATERIAU' MO 'YOUN' xyoun 'NU' xnu 'RHO' xrho 'ALPH' xalph
+'TALP' xtalp 'TREF' xtref 'DE0' xde0 'EA' xea 'VA' xva 'P1' xp1 'P2'
+xp2 'OMEG' xomega 'R0' xr0 'Q' xq 'B' xb 'H' xh 'NTA' xnta 'PALP'
+xpalpha;
+
+* The behaviour does not support the plane stress hypothesis
+* natively.
+* Support for the plane stress hypothesis
+* is added through the generic plane stress handler
+* provided by the Cast3M interface. This requires some tricky
+* manipulations of the material properties and can be quite
+* inefficient. Use it with care and consider adding proper
+* plane stress support to your behaviour.
+*
+** PlaneStress example
+** 'OPTION' 'DIMENSION' 2 'MODELISER' 'PLAN' 'CONT' ;
+
+ coel = 'MOTS' 'YOUN' 'NU' 'RHO' 'ALPH' 'DIM3' 'TALP' 'TREF' 'DE0' 'EA'
+'VA' 'P1' 'P2' 'OMEG' 'R0' 'Q' 'B' 'H' 'NTA' 'PALP';
+
+ statev = 'MOTS' 'EEXX' 'EEYY' 'EEZZ' 'EEXY' 'P' 'TA' 'ETOZ';
+
+ params = 'MOTS' 'T' ;
+
+ MO = 'MODELISER' v 'MECANIQUE' 'ELASTIQUE' 'NON_LINEAIRE'
+'UTILISATEUR' 'LIB_LOI' 'libUmatBehaviour.so' 'FCT_LOI' 'umatekmc'
+'C_MATERIAU' coel 'C_VARINTER' statev 'PARA_LOI' params 'CONS' M;
+
+ MA = 'MATERIAU' MO 'YOUN' xyoun 'NU' xnu 'RHO' xrho 'ALPH' xalph
+'DIM3' xdim3 'TALP' xtalp 'TREF' xtref 'DE0' xde0 'EA' xea 'VA' xva
+'P1' xp1 'P2' xp2 'OMEG' xomega 'R0' xr0 'Q' xq 'B' xb 'H' xh 'NTA'
+xnta 'PALP' xpalpha;
+

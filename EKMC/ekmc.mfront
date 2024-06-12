@@ -1,0 +1,63 @@
+@DSL Implicit;
+@Behaviour ekmc;
+
+@Algorithm NewtonRaphson_NumericalJacobian;
+@PerturbationValueForNumericalJacobianComputation 1e-8;
+@Epsilon 1e-14;
+@Theta 1;
+
+@Brick StandardElasticity;
+
+@MaterialProperty strainrate de0;
+@MaterialProperty real Ea;
+@MaterialProperty real Va;
+@MaterialProperty stress P1;
+@MaterialProperty real P2;
+@MaterialProperty real omega;
+@MaterialProperty stress R0;
+@MaterialProperty stress Q;
+@MaterialProperty real b;
+@MaterialProperty stress H;
+@MaterialProperty real nta;
+@MaterialProperty real palpha;
+
+@StateVariable strain p;
+p.setGlossaryName("EquivalentViscoplasticStrain");
+
+@AuxiliaryStateVariable time ta;
+ta.setEntryName("StrainAgingTime");
+
+@LocalVariable time dta;
+
+@LocalVariable strainrate de;
+
+@LocalVariable real sinh0;
+
+@InitLocalVariables {
+  const auto kB = PhysicalConstants::kb;
+  const auto T_theta = T + theta * dT;
+  de = de0 * exp(-Ea / (kB * (T_theta)));
+  sinh0 = kB * T_theta / Va;
+}
+
+@Integrator {
+  const auto seq = sigmaeq(sig);  
+  Stensor n = Stensor(0);
+  if(seq > 1.e-12){
+    n = 1.5 * deviator(sig)/seq;
+  }
+
+  const auto p_theta = max(p + theta * dp, 0.);
+  dta = (omega * dt - ta * dp) / (omega + theta * dp);
+  const auto ta_theta = ta + theta * dta;
+  const auto Cs = 1 - exp(-P2 * pow(p_theta, palpha) * pow(ta_theta, nta));
+  const auto Ra = P1 * Cs;
+  const auto R = R0 + Q * (1 - exp(-b * p_theta)) + H * p_theta + Ra;
+  const auto f = max(seq - R, stress{0});
+  feel = deel - deto + dp * n;
+  fp = dp - de * sinh(f / sinh0) * dt;
+}
+
+@UpdateAuxiliaryStateVariables {
+  ta = ta + dta;
+}

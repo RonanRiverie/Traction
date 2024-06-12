@@ -1,0 +1,160 @@
+***************************
+* CREATION DU MAILLAGE 2D *
+***************************
+
+OPTI 'DIME' 2 'ELEM' 'QUA4' ;
+
+L0 = 1.E-3 ;
+A = L0 ;
+PO = 0. 0. ;
+PA = A 0. ;
+PB = 0. A ;
+SU_EP = PO DROI 1 PA TRAN 1 PB ;
+CONTSU_EP = CONT SU_EP ;
+
+*************************************
+* DEFINITION DES MODELES MECANIQUES *
+************************************* 
+
+* HYPOTHESE DES CONTRAINTES PLANES *
+OPTI 'MODE' 'PLAN' 'CONT' ;
+
+* DEFINITION DU MODELE MECANIQUE *
+
+ coel = 'MOTS' 'YOUN' 'NU' 'RHO' 'ALPH' 'DIM3' 'TALP' 'TREF' 'DE0' 'EA'
+        'VA' 'P1' 'P2' 'OMEG' 'R0' 'Q' 'B' 'H' 'NTA' 'PALP';
+
+ statev = 'MOTS' 'EEXX' 'EEYY' 'EEZZ' 'EEXY' 'P' 'TA' 'ETOZ';
+
+ params = 'MOTS' 'T' ;
+
+ MO_EP = 'MODE' SU_EP 'MECANIQUE' 'ELASTIQUE' 'NON_LINEAIRE'
+         'UTILISATEUR' 'LIB_LOI' 'EKMC\src\libUmatBehaviour.dll' 'FCT_LOI' 'umatekmc'
+         'C_MATERIAU' coel 'C_VARINTER' statev 'PARA_LOI' params 'CONS' M ;
+
+* DEFINITION DU MATERIAU *
+
+xyoun = 209.E9 ;
+xnu = 0.3 ;
+xrho = 0. ;
+xalph = 0. ;
+xtalp = 0. ;
+xtref = 0. ;
+xde0 = 1.E-7 ;
+xea = 3.52E-21 ;
+xva = 1527.E-30 ;
+xp1 = 120.E6 ;
+xp2 = 3.E-4 ;
+xomega = 0.0015 ;
+xr0 = 200.E6 ;
+xq = 270.E6 ;
+xb = 23.3 ;
+xh = 440.E6 ;
+xnta = 0.66 ;
+xpalpha = 0.1 ;
+xta0 = 10000 ;
+
+ MA_EP = 'MATE' MO_EP 'YOUN' xyoun 'NU' xnu 'RHO' xrho 'ALPH' xalph
+         'TALP' xtalp 'TREF' xtref 'DE0' xde0 'EA' xea 'VA' xva 'P1' xp1 'P2'
+         xp2 'OMEG' xomega 'R0' xr0 'Q' xq 'B' xb 'H' xh 'NTA' xnta 'PALP' xpalpha ;
+
+**********************
+* CONDITIONS LIMITES *
+**********************
+
+* RECUPERATION DES POINTS DU MAILLAGE
+X_SU_EP = COOR 1 SU_EP ;
+Y_SU_EP = COOR 2 SU_EP ;
+
+* CONDITION LIMITE SUR LA LIGNE SUPERIEURE D'APPLICATION DE L'EFFORT *
+
+* RECUPERATION DES POINTS DE LA LIGNE DU HAUT
+P_LI_H = Y_SU_EP POIN 'MAXI' ;
+* RECUPERATION DE LA LIGNE CORRESPONDANTE
+LI_H = CONTSU_EP ELEM 'APPU' P_LI_H ;
+* TRAC (SU_EP ET (LI_H 'COUL' 'ROUG')) ;
+* BLOCAGE DES DEPLACEMENTS SELON UY 
+CL_LI_H = BLOQ 'UY' LI_H ;
+
+* CONDITION LIMITE SUR LA LIGNE INFERIEURE *
+
+* RECUPERATION DES POINTS DE LA LIGNE DU BAS
+P_LI_B = Y_SU_EP POIN 'MINI' ;
+* RECUPERATION DE LA LIGNE CORRESPONDANTE
+LI_B = CONTSU_EP ELEM 'APPU' P_LI_B ;
+* TRAC (SU_EP ET (LI_B 'COUL' 'ROUG')) ;
+* BLOCAGE DES DEPLACEMENTS SELON UY 
+CL_LI_B = BLOQ 'UY' LI_B ;
+
+* BLOCAGE DU POINT MILIEU SUR LA LIGNE DU BAS *
+
+* BLOCAGE DU DEPLACEMENT SELON UX
+CL_PO = BLOQ 'UX' PO ;
+
+******************************
+* DEFINITION DES CHARGEMENTS *
+******************************
+
+* CHARGEMENT MECANIQUE *
+
+* DEPLACEMENT IMPOSE AU NIVEAU DE LA LIGNE D'APPLICATION DE L'EFFORT
+EPS_VAL = 0.1 ;
+DEP_VAL = EPS_VAL * L0 ;
+DEP_FORC = DEPI CL_LI_H DEP_VAL ;
+
+* EVOLUTION DU CHARGEMENT DANS LE TEMPS
+T_0 = 0. ;
+T_F = 1. ;
+LISTE_TEMPS_TEMPS = PROG T_0 T_F ;
+LISTE_TEMPS_CHAR = PROG 0. 1. ;
+EVO_DEP_FORC = EVOL 'MANU' LISTE_TEMPS_TEMPS LISTE_TEMPS_CHAR ;
+CHAR_DEP_FORC = CHAR 'DIMP' DEP_FORC EVO_DEP_FORC ;
+
+* CHARGEMENT THERMIQUE *
+
+* CHARGEMENT HOMOGENE CONSTANT DANS LE TEMPS
+TK = 293.15 ;
+LISTE_TEMP_TEMP = PROG 1. 1. ;
+CHAMP_TEMP = 'MANU' 'CHPO' SU_EP 1 'T' TK ;
+EVO_TEMP = EVOL 'MANU' LISTE_TEMPS_TEMPS LISTE_TEMP_TEMP ;
+CHAR_TEMP = CHAR 'T' CHAMP_TEMP EVO_TEMP ;
+
+*****************************************
+* INITIALISATION DES VARIABLES INTERNES *
+*****************************************
+
+TA_0 = 0. ;
+VAR_CHAMP_0 = ZERO MO_EP 'VARINTER' ;
+VAR_0 = VAR_CHAMP_0 ;
+
+***************************************
+* RESOLUTION DU PROBLEME AVEC PASAPAS *
+***************************************
+
+* LISTE DES TEMPS CALCULES
+D_T = 0.1 ;
+LISTE_CALC_TEMPS = PROG T_0 'PAS' D_T T_F ;
+
+* DEFINITION DE LA TABLE 
+TAB1 = TABLE ;
+TAB1 . 'MODELE' = MO_EP ;
+TAB1 . 'CARACTERISTIQUES' = MA_EP ;
+TAB1 . 'BLOCAGES_MECANIQUES' = CL_LI_H ET CL_LI_B ET CL_PO ;
+TAB1 . 'CHARGEMENT' = CHAR_DEP_FORC ET CHAR_TEMP ;
+TAB1 . 'TEMPS_CALCULES' = LISTE_CALC_TEMPS ;
+TAB1 . 'TEMPERATURES' = TABLE ;
+TAB1 . 'VARIABLES_INTERNES' = TABLE ;
+TAB1 . 'TEMPERATURES' . 0 = CHAMP_TEMP ;
+TAB1 . 'VARIABLES_INTERNES' . 0 = VAR_0 ;
+
+* LANCEMENT DE PASAPAS
+PASAPAS TAB1 ;
+
+**************************
+* SAUVEGARDE DES CALCULS *
+**************************
+
+OPTI 'SAUV' 'EKMC\traction_calcul.sauv'; 
+SAUV; 
+
+FIN ;

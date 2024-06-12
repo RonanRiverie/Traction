@@ -1,0 +1,36 @@
+{
+library : {
+name   : "UmatBehaviour";
+type   : SHARED_LIBRARY;
+prefix : "lib";
+suffix : "dll";
+install_path : "";
+sources : {
+"umatekmc.cxx",
+"ekmc.cxx"
+};
+cppflags : {
+"$(shell tfel-config.exe --cppflags --compiler-flags)",
+"-DWIN64"
+};
+include_directories : {
+"$(shell tfel-config.exe --include-path)"
+};
+link_directories : {
+"$(shell tfel-config.exe --library-path)"
+};
+link_libraries : {
+"CastemInterface",
+"$(shell tfel-config.exe --library-dependency --material --mfront-profiling --physical-constants)"
+};
+epts : {
+"umatekmc"
+};
+};
+headers : {
+"MFront/Castem/umatekmc.hxx",
+"TFEL/Material/ekmc.hxx",
+"TFEL/Material/ekmcBehaviourData.hxx",
+"TFEL/Material/ekmcIntegrationData.hxx"
+};
+};
