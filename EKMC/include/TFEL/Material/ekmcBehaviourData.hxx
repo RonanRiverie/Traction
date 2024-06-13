@@ -139,13 +139,15 @@ stress H;
 real nta;
 #line 22 "ekmc.mfront"
 real palpha;
+#line 23 "ekmc.mfront"
+real ta0;
 stress young;
 real nu;
 
 StrainStensor eel;
-#line 24 "ekmc.mfront"
+#line 25 "ekmc.mfront"
 strain p;
-#line 27 "ekmc.mfront"
+#line 28 "ekmc.mfront"
 time ta;
 temperature T;
 
@@ -175,6 +177,7 @@ b(src.b),
 H(src.H),
 nta(src.nta),
 palpha(src.palpha),
+ta0(src.ta0),
 young(src.young),
 nu(src.nu),
 eel(src.eel),
@@ -205,6 +208,7 @@ b(CASTEMmat[8]),
 H(CASTEMmat[9]),
 nta(CASTEMmat[10]),
 palpha(CASTEMmat[11]),
+ta0(CASTEMmat[12]),
 young(CASTEMmat[-6]),
 nu(CASTEMmat[-5]),
 eel(&CASTEMint_vars[0]),
@@ -244,6 +248,7 @@ this->b = src.b;
 this->H = src.H;
 this->nta = src.nta;
 this->palpha = src.palpha;
+this->ta0 = src.ta0;
 this->young = src.young;
 this->nu = src.nu;
 this->eel = src.eel;
@@ -283,6 +288,7 @@ os << "b : " << b.b << '\n';
 os << "H : " << b.H << '\n';
 os << "nta : " << b.nta << '\n';
 os << "palpha : " << b.palpha << '\n';
+os << "ta0 : " << b.ta0 << '\n';
 os << "young : " << b.young << '\n';
 os << "nu : " << b.nu << '\n';
 os << "εᵉˡ : " << b.eel << '\n';

@@ -203,14 +203,14 @@ private :
 
 
 typename tfel::math::StensorFromTinyVectorView<N,1+StensorSize,0,real>::type deel;
-#line 24 "ekmc.mfront"
+#line 25 "ekmc.mfront"
 real& dp;
 
-#line 30 "ekmc.mfront"
+#line 31 "ekmc.mfront"
 time dta;
-#line 32 "ekmc.mfront"
+#line 33 "ekmc.mfront"
 strainrate de;
-#line 34 "ekmc.mfront"
+#line 35 "ekmc.mfront"
 real sinh0;
 struct{
 stress lambda;
@@ -347,7 +347,7 @@ this->p += this->dp;
 void updateAuxiliaryStateVariables(){
 using namespace std;
 using namespace tfel::math;
-#line 62 "ekmc.mfront"
+#line 63 "ekmc.mfront"
 this->ta = this->ta + this->dta;
 }
 
@@ -440,13 +440,13 @@ using std::vector;
 this->sebdata.lambda = tfel::material::computeLambda(this->young,this->nu);
 this->sebdata.mu = tfel::material::computeMu(this->young,this->nu);
 
-#line 37 "ekmc.mfront"
-const auto kB = PhysicalConstants::kb;
 #line 38 "ekmc.mfront"
-const auto T_theta = this->T + theta * this->dT;
+const auto kB = PhysicalConstants::kb;
 #line 39 "ekmc.mfront"
-this->de = this->de0 * exp(-this->Ea / (kB * (T_theta)));
+const auto T_theta = this->T + theta * this->dT;
 #line 40 "ekmc.mfront"
+this->de = this->de0 * exp(-this->Ea / (kB * (T_theta)));
+#line 41 "ekmc.mfront"
 this->sinh0 = kB * T_theta / this->Va;
 }
 
@@ -579,33 +579,35 @@ real& fp(this->fzeros(StensorSize));
 // setting f values to zeros
 this->fzeros = this->zeros;
 feel -= this->deto;
-#line 44 "ekmc.mfront"
-const auto seq = sigmaeq((this->sig));
 #line 45 "ekmc.mfront"
-Stensor n = Stensor(0);
+const auto seq = sigmaeq((this->sig));
 #line 46 "ekmc.mfront"
-if(seq > 1.e-12){
+Stensor n = Stensor(0);
 #line 47 "ekmc.mfront"
-n = 1.5 * deviator((this->sig))/seq;
+if (seq > 1.e-12) {
 #line 48 "ekmc.mfront"
+n = 1.5 * deviator((this->sig)) / seq;
+#line 49 "ekmc.mfront"
 }
 #line 50 "ekmc.mfront"
-const auto p_theta = max((this->p) + theta * (this->dp), 0.);
+const auto ta_bts = (this->ta0) + (this->ta);
 #line 51 "ekmc.mfront"
-(this->dta) = ((this->omega) * (this->dt) - (this->ta) * (this->dp)) / ((this->omega) + theta * (this->dp));
+const auto p_theta = max((this->p) + theta * (this->dp), 0.);
 #line 52 "ekmc.mfront"
-const auto ta_theta = (this->ta) + theta * (this->dta);
+(this->dta) = ((this->omega) * (this->dt) - ta_bts * (this->dp)) / ((this->omega) + theta * (this->dp));
 #line 53 "ekmc.mfront"
-const auto Cs = 1 - exp(-(this->P2) * pow(p_theta, (this->palpha)) * pow(ta_theta, (this->nta)));
+const auto ta_theta = ta_bts + theta * (this->dta);
 #line 54 "ekmc.mfront"
-const auto Ra = (this->P1) * Cs;
+const auto Cs = 1 - exp(-(this->P2) * pow(p_theta, (this->palpha)) * pow(ta_theta, (this->nta)));
 #line 55 "ekmc.mfront"
-const auto R = (this->R0) + (this->Q) * (1 - exp(-(this->b) * p_theta)) + (this->H) * p_theta + Ra;
+const auto Ra = (this->P1) * Cs;
 #line 56 "ekmc.mfront"
-const auto f = max(seq - R, stress{0});
+const auto R = (this->R0) + (this->Q) * (1 - exp(-(this->b) * p_theta)) + (this->H) * p_theta + Ra;
 #line 57 "ekmc.mfront"
-feel = (this->deel) - (this->deto) + (this->dp) * n;
+const auto f = max(seq - R, stress{0});
 #line 58 "ekmc.mfront"
+feel += (this->dp) * n;
+#line 59 "ekmc.mfront"
 fp = (this->dp) - (this->de) * sinh(f / (this->sinh0)) * (this->dt);
 return true;
 }
@@ -733,6 +735,7 @@ os << "b : " << b.b << '\n';
 os << "H : " << b.H << '\n';
 os << "nta : " << b.nta << '\n';
 os << "palpha : " << b.palpha << '\n';
+os << "ta0 : " << b.ta0 << '\n';
 os << "young : " << b.young << '\n';
 os << "nu : " << b.nu << '\n';
 os << "εᵉˡ : " << b.eel << '\n';
@@ -772,7 +775,7 @@ static constexpr bool hasStressFreeExpansion = false;
 static constexpr bool handlesThermalExpansion = false;
 static constexpr unsigned short dimension = N;
 typedef Type NumType;
-static constexpr unsigned short material_properties_nb = 14;
+static constexpr unsigned short material_properties_nb = 15;
 static constexpr unsigned short internal_variables_nb  = 2+StensorSize;
 static constexpr unsigned short external_variables_nb  = 1;
 static constexpr unsigned short external_variables_nb2 = 0;

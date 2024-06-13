@@ -20,6 +20,7 @@
 @MaterialProperty stress H;
 @MaterialProperty real nta;
 @MaterialProperty real palpha;
+@MaterialProperty real ta0 ;
 
 @StateVariable strain p;
 p.setGlossaryName("EquivalentViscoplasticStrain");
@@ -41,20 +42,20 @@ ta.setEntryName("StrainAgingTime");
 }
 
 @Integrator {
-  const auto seq = sigmaeq(sig);  
+  const auto seq = sigmaeq(sig);
   Stensor n = Stensor(0);
-  if(seq > 1.e-12){
-    n = 1.5 * deviator(sig)/seq;
+  if (seq > 1.e-12) {
+    n = 1.5 * deviator(sig) / seq;
   }
-
+  const auto ta_bts = ta0 + ta;
   const auto p_theta = max(p + theta * dp, 0.);
-  dta = (omega * dt - ta * dp) / (omega + theta * dp);
-  const auto ta_theta = ta + theta * dta;
+  dta = (omega * dt - ta_bts * dp) / (omega + theta * dp);
+  const auto ta_theta = ta_bts + theta * dta;
   const auto Cs = 1 - exp(-P2 * pow(p_theta, palpha) * pow(ta_theta, nta));
   const auto Ra = P1 * Cs;
   const auto R = R0 + Q * (1 - exp(-b * p_theta)) + H * p_theta + Ra;
   const auto f = max(seq - R, stress{0});
-  feel = deel - deto + dp * n;
+  feel += dp * n;
   fp = dp - de * sinh(f / sinh0) * dt;
 }
 

@@ -21,8 +21,7 @@
 @MaterialProperty<constant> 'omega' 0.001;
 @MaterialProperty<constant> 'P2' 0.001;
 @MaterialProperty<constant> 'palpha' 0.;
-
-@InternalStateVariable 'StrainAgingTime' 10000.;
+@MaterialProperty<constant> 'ta0' 10000.;
 
 @ExternalStateVariable 'Temperature' 293.15 ;
 

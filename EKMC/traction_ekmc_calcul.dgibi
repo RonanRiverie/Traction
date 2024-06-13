@@ -15,7 +15,7 @@ OPTI 'MODE' 'PLAN' 'CONT' ;
 * DEFINITION DU MODELE MECANIQUE *
 
  coel = 'MOTS' 'YOUN' 'NU' 'RHO' 'ALPH' 'DIM3' 'TALP' 'TREF' 'DE0' 'EA'
-        'VA' 'P1' 'P2' 'OMEG' 'R0' 'Q' 'B' 'H' 'NTA' 'PALP';
+        'VA' 'P1' 'P2' 'OMEG' 'R0' 'Q' 'B' 'H' 'NTA' 'PALP' 'TA0';
 
  statev = 'MOTS' 'EEXX' 'EEYY' 'EEZZ' 'EEXY' 'P' 'TA' 'ETOZ';
 
@@ -34,22 +34,23 @@ xalph = 0. ;
 xtalp = 0. ;
 xtref = 0. ;
 xde0 = 1.E-7 ;
-xea = 3.52E-21 ;
+xea = 3.52E-22 ;
 xva = 1527.E-30 ;
-xp1 = 120.E6 ;
-xp2 = 3.E-4 ;
-xomega = 0.0015 ;
-xr0 = 200.E6 ;
-xq = 270.E6 ;
-xb = 23.3 ;
-xh = 440.E6 ;
+xp1 = 100.E6 ;
+xp2 = 0.001 ;
+xomega = 0.001 ;
+xr0 = 260.E6 ;
+xq = 222.3E6 ;
+xb = 20. ;
+xh = 0. ;
 xnta = 0.66 ;
-xpalpha = 0.1 ;
-xta0 = 10000 ;
+xpalpha = 0.0 ;
+xta0 = 10000. ;
 
  MA_EP = 'MATE' MO_EP 'YOUN' xyoun 'NU' xnu 'RHO' xrho 'ALPH' xalph
          'TALP' xtalp 'TREF' xtref 'DE0' xde0 'EA' xea 'VA' xva 'P1' xp1 'P2'
-         xp2 'OMEG' xomega 'R0' xr0 'Q' xq 'B' xb 'H' xh 'NTA' xnta 'PALP' xpalpha ;
+         xp2 'OMEG' xomega 'R0' xr0 'Q' xq 'B' xb 'H' xh 'NTA' xnta 'PALP' xpalpha 
+         'TA0' xta0;
 
 **********************
 * CONDITIONS LIMITES *
@@ -91,13 +92,14 @@ CL_PO = BLOQ 'UX' PO ;
 * CHARGEMENT MECANIQUE *
 
 * DEPLACEMENT IMPOSE AU NIVEAU DE LA LIGNE D'APPLICATION DE L'EFFORT
-EPS_VAL = 0.1 ;
+EPS_VAL = 0.08 ;
 DEP_VAL = EPS_VAL * L0 ;
 DEP_FORC = DEPI CL_LI_H DEP_VAL ;
 
 * EVOLUTION DU CHARGEMENT DANS LE TEMPS
 T_0 = 0. ;
-T_F = 1. ;
+EPS_POINT = 1. ;
+T_F = EPS_VAL / EPS_POINT ;
 LISTE_TEMPS_TEMPS = PROG T_0 T_F ;
 LISTE_TEMPS_CHAR = PROG 0. 1. ;
 EVO_DEP_FORC = EVOL 'MANU' LISTE_TEMPS_TEMPS LISTE_TEMPS_CHAR ;
@@ -125,7 +127,8 @@ VAR_0 = VAR_CHAMP_0 ;
 ***************************************
 
 * LISTE DES TEMPS CALCULES
-D_T = 0.1 ;
+N_T = 500 ;
+D_T = T_F / N_T ;
 LISTE_CALC_TEMPS = PROG T_0 'PAS' D_T T_F ;
 
 * DEFINITION DE LA TABLE 
@@ -147,7 +150,7 @@ PASAPAS TAB1 ;
 * SAUVEGARDE DES CALCULS *
 **************************
 
-OPTI 'SAUV' 'EKMC\traction_calcul.sauv'; 
+OPTI 'SAUV' 'EKMC\traction_ekmc_calcul.sauv'; 
 SAUV; 
 
 FIN ;

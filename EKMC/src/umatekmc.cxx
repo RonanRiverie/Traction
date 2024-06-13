@@ -69,9 +69,9 @@ MFRONT_SHAREDOBJ const char * const * umatekmc_LinearThermalExpansionCoefficient
 
 MFRONT_SHAREDOBJ unsigned short umatekmc_UsableInPurelyImplicitResolution = 0;
 
-MFRONT_SHAREDOBJ unsigned short umatekmc_nMaterialProperties = 12u;
+MFRONT_SHAREDOBJ unsigned short umatekmc_nMaterialProperties = 13u;
 
-MFRONT_SHAREDOBJ const char *umatekmc_MaterialProperties[12u] = {"de0",
+MFRONT_SHAREDOBJ const char *umatekmc_MaterialProperties[13u] = {"de0",
 "Ea",
 "Va",
 "P1",
@@ -82,7 +82,8 @@ MFRONT_SHAREDOBJ const char *umatekmc_MaterialProperties[12u] = {"de0",
 "b",
 "H",
 "nta",
-"palpha"};
+"palpha",
+"ta0"};
 
 MFRONT_SHAREDOBJ unsigned short umatekmc_nInternalStateVariables = 3;
 MFRONT_SHAREDOBJ const char * umatekmc_InternalStateVariables[3] = {"ElasticStrain",

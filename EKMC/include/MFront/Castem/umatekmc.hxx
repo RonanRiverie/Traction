@@ -62,7 +62,7 @@ static constexpr const bool doSubSteppingOnInvalidResults = true;
 static constexpr const unsigned short maximumSubStepping = 0u;
 static constexpr const bool requiresStiffnessTensor = false;
 static constexpr const bool requiresThermalExpansionCoefficientTensor = false;
-static constexpr const unsigned short material_properties_nb = 12;
+static constexpr const unsigned short material_properties_nb = 13;
 static constexpr const unsigned short propertiesOffset = CastemIsotropicOffset<castem::STANDARDSTRAINBASEDBEHAVIOUR,H>::value + 2u;
 static constexpr const CastemSymmetryType stype = castem::ISOTROPIC;
 }; // end of class CastemTraits

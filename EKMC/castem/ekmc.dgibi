@@ -10,7 +10,7 @@
 ** 'OPTION' 'DIMENSION' 1 'MODELISER' 'UNID' 'AXIS' 'AXGZ' ;
 
  coel = 'MOTS' 'YOUN' 'NU' 'RHO' 'ALPH' 'TALP' 'TREF' 'DE0' 'EA' 'VA'
-'P1' 'P2' 'OMEG' 'R0' 'Q' 'B' 'H' 'NTA' 'PALP';
+'P1' 'P2' 'OMEG' 'R0' 'Q' 'B' 'H' 'NTA' 'PALP' 'TA0';
 
  statev = 'MOTS' 'EERR' 'EEZZ' 'EETT' 'P' 'TA';
 
@@ -23,13 +23,13 @@
  MA = 'MATERIAU' MO 'YOUN' xyoun 'NU' xnu 'RHO' xrho 'ALPH' xalph
 'TALP' xtalp 'TREF' xtref 'DE0' xde0 'EA' xea 'VA' xva 'P1' xp1 'P2'
 xp2 'OMEG' xomega 'R0' xr0 'Q' xq 'B' xb 'H' xh 'NTA' xnta 'PALP'
-xpalpha;
+xpalpha 'TA0' xta0;
 
 ** Axisymmetrical example
 ** 'OPTION' 'DIMENSION' 2 'MODELISER' 'AXIS' ;
 
  coel = 'MOTS' 'YOUN' 'NU' 'RHO' 'ALPH' 'TALP' 'TREF' 'DE0' 'EA' 'VA'
-'P1' 'P2' 'OMEG' 'R0' 'Q' 'B' 'H' 'NTA' 'PALP';
+'P1' 'P2' 'OMEG' 'R0' 'Q' 'B' 'H' 'NTA' 'PALP' 'TA0';
 
  statev = 'MOTS' 'EERR' 'EEZZ' 'EETT' 'EERZ' 'P' 'TA';
 
@@ -42,13 +42,13 @@ xpalpha;
  MA = 'MATERIAU' MO 'YOUN' xyoun 'NU' xnu 'RHO' xrho 'ALPH' xalph
 'TALP' xtalp 'TREF' xtref 'DE0' xde0 'EA' xea 'VA' xva 'P1' xp1 'P2'
 xp2 'OMEG' xomega 'R0' xr0 'Q' xq 'B' xb 'H' xh 'NTA' xnta 'PALP'
-xpalpha;
+xpalpha 'TA0' xta0;
 
 ** PlaneStrain example
 ** 'OPTION' 'DIMENSION' 2 'MODELISER' 'PLAN' 'DEFO' ;
 
  coel = 'MOTS' 'YOUN' 'NU' 'RHO' 'ALPH' 'TALP' 'TREF' 'DE0' 'EA' 'VA'
-'P1' 'P2' 'OMEG' 'R0' 'Q' 'B' 'H' 'NTA' 'PALP';
+'P1' 'P2' 'OMEG' 'R0' 'Q' 'B' 'H' 'NTA' 'PALP' 'TA0';
 
  statev = 'MOTS' 'EEXX' 'EEYY' 'EEZZ' 'EEXY' 'P' 'TA';
 
@@ -61,13 +61,13 @@ xpalpha;
  MA = 'MATERIAU' MO 'YOUN' xyoun 'NU' xnu 'RHO' xrho 'ALPH' xalph
 'TALP' xtalp 'TREF' xtref 'DE0' xde0 'EA' xea 'VA' xva 'P1' xp1 'P2'
 xp2 'OMEG' xomega 'R0' xr0 'Q' xq 'B' xb 'H' xh 'NTA' xnta 'PALP'
-xpalpha;
+xpalpha 'TA0' xta0;
 
 ** GeneralisedPlaneStrain example
 ** 'OPTION' 'DIMENSION' 2 'MODELISER' 'PLAN' 'GENE' ;
 
  coel = 'MOTS' 'YOUN' 'NU' 'RHO' 'ALPH' 'TALP' 'TREF' 'DE0' 'EA' 'VA'
-'P1' 'P2' 'OMEG' 'R0' 'Q' 'B' 'H' 'NTA' 'PALP';
+'P1' 'P2' 'OMEG' 'R0' 'Q' 'B' 'H' 'NTA' 'PALP' 'TA0';
 
  statev = 'MOTS' 'EEXX' 'EEYY' 'EEZZ' 'EEXY' 'P' 'TA';
 
@@ -80,13 +80,13 @@ xpalpha;
  MA = 'MATERIAU' MO 'YOUN' xyoun 'NU' xnu 'RHO' xrho 'ALPH' xalph
 'TALP' xtalp 'TREF' xtref 'DE0' xde0 'EA' xea 'VA' xva 'P1' xp1 'P2'
 xp2 'OMEG' xomega 'R0' xr0 'Q' xq 'B' xb 'H' xh 'NTA' xnta 'PALP'
-xpalpha;
+xpalpha 'TA0' xta0;
 
 ** Tridimensional example
 ** 'OPTION' 'DIMENSION' 3 'MODELISER' 'TRID' ;
 
  coel = 'MOTS' 'YOUN' 'NU' 'RHO' 'ALPH' 'TALP' 'TREF' 'DE0' 'EA' 'VA'
-'P1' 'P2' 'OMEG' 'R0' 'Q' 'B' 'H' 'NTA' 'PALP';
+'P1' 'P2' 'OMEG' 'R0' 'Q' 'B' 'H' 'NTA' 'PALP' 'TA0';
 
  statev = 'MOTS' 'EEXX' 'EEYY' 'EEZZ' 'EEXY' 'EEXZ' 'EEYZ' 'P' 'TA';
 
@@ -99,7 +99,7 @@ xpalpha;
  MA = 'MATERIAU' MO 'YOUN' xyoun 'NU' xnu 'RHO' xrho 'ALPH' xalph
 'TALP' xtalp 'TREF' xtref 'DE0' xde0 'EA' xea 'VA' xva 'P1' xp1 'P2'
 xp2 'OMEG' xomega 'R0' xr0 'Q' xq 'B' xb 'H' xh 'NTA' xnta 'PALP'
-xpalpha;
+xpalpha 'TA0' xta0;
 
 * The behaviour does not support the plane stress hypothesis
 * natively.
@@ -114,7 +114,7 @@ xpalpha;
 ** 'OPTION' 'DIMENSION' 2 'MODELISER' 'PLAN' 'CONT' ;
 
  coel = 'MOTS' 'YOUN' 'NU' 'RHO' 'ALPH' 'DIM3' 'TALP' 'TREF' 'DE0' 'EA'
-'VA' 'P1' 'P2' 'OMEG' 'R0' 'Q' 'B' 'H' 'NTA' 'PALP';
+'VA' 'P1' 'P2' 'OMEG' 'R0' 'Q' 'B' 'H' 'NTA' 'PALP' 'TA0';
 
  statev = 'MOTS' 'EEXX' 'EEYY' 'EEZZ' 'EEXY' 'P' 'TA' 'ETOZ';
 
@@ -127,5 +127,5 @@ xpalpha;
  MA = 'MATERIAU' MO 'YOUN' xyoun 'NU' xnu 'RHO' xrho 'ALPH' xalph
 'DIM3' xdim3 'TALP' xtalp 'TREF' xtref 'DE0' xde0 'EA' xea 'VA' xva
 'P1' xp1 'P2' xp2 'OMEG' xomega 'R0' xr0 'Q' xq 'B' xb 'H' xh 'NTA'
-xnta 'PALP' xpalpha;
+xnta 'PALP' xpalpha 'TA0' xta0;
 
