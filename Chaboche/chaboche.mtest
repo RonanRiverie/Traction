@@ -1,0 +1,25 @@
+@Behaviour<umat> './src/libUmatBehaviour.dll' 'umatchaboche';
+
+@AccelerationAlgorithm 'Cast3M';
+
+@MaterialProperty<constant> 'xyoung' 209.e9;
+@MaterialProperty<constant> 'xnu' 0.3;
+@MaterialProperty<constant> 'MassDensity' 0.0 ;
+@MaterialProperty<constant> 'ThermalExpansion' 0.0 ;
+@MaterialProperty<constant> 'ReferenceTemperatureForThermalExpansionCoefficient' 0.0 ;
+@MaterialProperty<constant> 'ReferenceTemperatureForThermalExpansion' 0.0 ;
+
+@MaterialProperty<constant> 'xR0' 260.e6;
+@MaterialProperty<constant> 'xQ'222.3e6;
+@MaterialProperty<constant> 'xb' 20.;
+
+@ExternalStateVariable 'Temperature' 293.15 ;
+
+@Real 'edot' 1.;
+@Real 'EXXR0' 0.0025;
+@Real 'tR0' 'EXXR0/edot';
+@Real 'EXXmax' 0.02;
+@Real 'tmax' 'EXXmax/edot';																							
+
+@ImposedStrain 'EXX' { 0. :  0., 'tR0' : 'EXXR0', 'tmax' : 'EXXmax'};
+@Times {0., 'tR0' in 20, 'tmax' in 20};

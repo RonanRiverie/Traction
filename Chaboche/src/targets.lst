@@ -1,0 +1,43 @@
+{
+library : {
+name   : "UmatBehaviour";
+type   : SHARED_LIBRARY;
+prefix : "lib";
+suffix : "dll";
+install_path : "";
+sources : {
+"umatchaboche.cxx",
+"chaboche_YoungModulus-castem.cxx",
+"chaboche_PoissonRatio-castem.cxx",
+"chaboche.cxx"
+};
+cppflags : {
+"$(shell tfel-config.exe --cppflags --compiler-flags)",
+"-DWIN64"
+};
+include_directories : {
+"$(shell tfel-config.exe --include-path)"
+};
+link_directories : {
+"$(shell tfel-config.exe --library-path)"
+};
+link_libraries : {
+"CastemInterface",
+"$(shell tfel-config.exe --library-dependency --material --mfront-profiling --physical-constants)",
+"m"
+};
+epts : {
+"umatchaboche",
+"chaboche_YoungModulus",
+"chaboche_PoissonRatio"
+};
+};
+headers : {
+"MFront/Castem/umatchaboche.hxx",
+"include/chaboche_YoungModulus-castem.hxx",
+"include/chaboche_PoissonRatio-castem.hxx",
+"TFEL/Material/chaboche.hxx",
+"TFEL/Material/chabocheBehaviourData.hxx",
+"TFEL/Material/chabocheIntegrationData.hxx"
+};
+};

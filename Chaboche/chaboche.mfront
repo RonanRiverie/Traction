@@ -1,0 +1,27 @@
+@DSL Implicit;
+@Behaviour chaboche;
+
+@Algorithm NewtonRaphson;
+@Epsilon 1.e-12;
+@Theta 1;
+
+@MaterialProperty stress xyoung;
+@MaterialProperty stress xnu;
+@MaterialProperty stress xR0;
+@MaterialProperty stress xQ;
+@MaterialProperty real xb;
+
+@Brick StandardElastoViscoPlasticity{
+  stress_potential : "Hooke" {
+    young_modulus : "xyoung", 
+    poisson_ratio : "xnu"
+  },
+  inelastic_flow : "Plastic" {
+    criterion : "Mises",
+    isotropic_hardening : "Voce" {
+      R0 : "xR0",
+      Rinf : "xQ + xR0",
+      b : "xb"
+    }
+  }
+};
