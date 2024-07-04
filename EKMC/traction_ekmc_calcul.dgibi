@@ -2,7 +2,7 @@
 * RESTITUTION DES OBJETS DU MAILLAGE ET DE LA GEOMETRIE *
 *********************************************************
 
-OPTI 'REST' 'Maillage\traction_maillage.sauv' ; 
+OPTI 'REST' 'traction_maillage.sauv' ; 
 REST ;
 
 *************************************
@@ -22,7 +22,7 @@ OPTI 'MODE' 'PLAN' 'CONT' ;
  params = 'MOTS' 'T' ;
 
  MO_EP = 'MODE' SU_EP 'MECANIQUE' 'ELASTIQUE' 'NON_LINEAIRE'
-         'UTILISATEUR' 'LIB_LOI' 'EKMC\src\libUmatBehaviour.dll' 'FCT_LOI' 'umatekmc'
+         'UTILISATEUR' 'LIB_LOI' 'src\libUmatBehaviour.dll' 'FCT_LOI' 'umatekmc'
          'C_MATERIAU' coel 'C_VARINTER' statev 'PARA_LOI' params 'CONS' M ;
 
 * DEFINITION DU MATERIAU *
@@ -150,7 +150,7 @@ PASAPAS TAB1 ;
 * SAUVEGARDE DES CALCULS *
 **************************
 
-OPTI 'SAUV' 'EKMC\traction_ekmc_calcul.sauv'; 
+OPTI 'SAUV' 'traction_ekmc_calcul.sauv'; 
 SAUV; 
 
 FIN ;

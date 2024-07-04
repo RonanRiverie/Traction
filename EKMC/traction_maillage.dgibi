@@ -97,7 +97,7 @@ P_EXT_B = SU_EP POIN 'PROC' P_EXT_B_TH ;
 
 * SAUVEGARDE DU MAILLAGE *
 
-OPTI 'SAUV' 'Maillage\traction_maillage.sauv' ; 
+OPTI 'SAUV' 'traction_maillage.sauv' ; 
 SAUV ; 
 
 FIN ;
